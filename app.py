@@ -385,27 +385,27 @@ def internal_error(error):
         'code': 'INTERNAL_ERROR'
     }), 500
 
-if __name__ == '__main__':
+if _name_ == '_main_':
     print("🚀 Starting Flutter-Ready Spam Detection API...")
-    
+
     # Load models on startup
     if not load_models():
         print("❌ Failed to load models. Please ensure spam_model.pkl and vectorizer.pkl exist.")
         exit(1)
-    
-    print("🌐 Starting server on http://localhost:5000")
-    print("� Flutter-Ready API Endpoints:")
+
+    print("🌐 Starting server on http://0.0.0.0:8000")
+    print("  Flutter-Ready API Endpoints:")
     print("  GET  /                    - API information")
     print("  GET  /api/health          - Health check")
     print("  POST /api/predict         - Single message prediction")
     print("  POST /api/batch-predict   - Batch message prediction")
-    print("\n� Legacy Endpoints (backward compatibility):")
-    print("  GET  /health              - Legacy health check")
-    print("  POST /predict             - Legacy single prediction")
     print("\n📱 Flutter HTTP Examples:")
-    print("  POST http://localhost:5000/api/predict")
+    print("  POST http://localhost:8000/api/predict")
     print("  Body: {\"message\": \"Your message here\"}")
     print("\n✅ CORS enabled for Flutter app access")
-    
-    # Run the Flask app with host 0.0.0.0 for external access
-    app.run(host='0.0.0.0', port=5000, debug=True)
+
+    # ⚠ Important for Azure: bind to 0.0.0.0 and PORT from environment
+    import os
+    port = int(os.environ.get("PORT", 8000))
+
+    app.run(host='0.0.0.0', port=port)
